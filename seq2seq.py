@@ -43,10 +43,40 @@ class Encoder(nn.Module):
     def forward(self, x):
         # x.shape: (seq_length, N)
         embedding = self.dropout(self.embedding(x))
+        # embedding shape:  (seq_length, N, embedding_size)
+
         outputs, (hidden, cell) = self.rnn(embedding)
+        return hidden, cell
 
 class Decoder(nn.Module):
-    pass
+    def __init__(self, input_size, embedding_size, hidden_size, output_size, num_layers, p):
+        super(Decoder, self).__init__()
+        self.hidden_size = hidden_size
+        self.num_layers = num_layers
+
+        self.dropout = nn.Dropout(p)
+        self.embedding = nn.Embedding(input_size, embedding_size)
+        self.rnn = nn.LSTM(embedding_size, hidden_size, num_layers, dropout=p)
+        self.fc = nn.Linear(hidden_size, output_size)
+        
+    def forward(self, x, hidden, cell):
+        # shape x (N), but we want (1, N)
+        x = x.unsqueeze(0)
+
+        embedding = self.dropout(self.embedding(x))
+        # embedding shape: (1, N, embedding_size)
+
+        outputs, (hidden, cell) = self.rnn(embedding, (hidden, cell))
+        # shape of outputs: (1, N, hidden_size)
+
+        predictions = self.fc(outputs)
+        # shape of predictions: (1, N, length_of_vocab)
+
+        predictions = predictions.squeeze(0)
+
+        return predictions
+
+
 
 class Seq2Seq(nn.Module):
     pass
