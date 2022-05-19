@@ -6,7 +6,7 @@ import math
 
 from datapreprocess import PAD_IDX, vocab_transform, SRC_LANGUAGE, TGT_LANGUAGE
 
-DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'mps')
+DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(DEVICE)
 
 
