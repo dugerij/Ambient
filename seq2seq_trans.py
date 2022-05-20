@@ -206,7 +206,7 @@ def train_epoch(model, optimizer):
         optimizer.step()
         losses += loss.item()
 
-    return losses / len(train_dataloader)
+    return losses / len(train_dataloader) # location of current error
 
 def evaluate(model):
     model.eval()
