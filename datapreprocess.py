@@ -1,6 +1,7 @@
 # implemented from https://pytorch.org/tutorials/beginner/translation_transformer.html
 
 from socketserver import ThreadingTCPServer
+# torchtext fails import
 from torchtext.data.utils import get_tokenizer
 from torchtext.vocab import build_vocab_from_iterator
 from torchtext.datasets import Multi30k

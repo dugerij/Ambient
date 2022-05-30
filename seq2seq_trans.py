@@ -1,4 +1,5 @@
 from socketserver import ThreadingTCPServer
+import torch
 from torchtext.data.utils import get_tokenizer
 from torchtext.vocab import build_vocab_from_iterator
 from torchtext.datasets import Multi30k
